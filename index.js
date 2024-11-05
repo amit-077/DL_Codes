@@ -4,13 +4,25 @@ const app = express();
 const port = 5000;
 
 // Define a route that handles requests to download assignment files
-app.get("/:assignment", (req, res) => {
+app.get("/:folder?/:assignment", (req, res) => {
+  const folder = req.params.folder;
   const assignment = req.params.assignment;
-  const allowedFiles = ["ass1", "ass2", "ass3", "ass4", "ass5", "ass6"];
+  const allowedFiles = [
+    "ass1",
+    "ass2",
+    "ass3",
+    "ass4",
+    "ass5",
+    "ass6",
+    "ass32",
+  ];
 
   if (allowedFiles.includes(assignment)) {
-    // Define the path to the file
-    const filePath = path.join(__dirname, "files", `${assignment}.ipynb`);
+    // Determine the file path based on the folder parameter
+    const filePath =
+      folder === "kappa"
+        ? path.join(__dirname, "files", "kappa", `${assignment}.ipynb`)
+        : path.join(__dirname, "files", `${assignment}.ipynb`);
 
     // Send the file as a download
     res.download(filePath, `${assignment}.ipynb`, (err) => {
