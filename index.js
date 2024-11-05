@@ -3,6 +3,18 @@ const path = require("path");
 const app = express();
 const port = 5000;
 
+app.get("/code", (req, res) => {
+  res.send(`def download_file(url, filename):
+      # Make a GET request to the URL
+      response = requests.get(url)
+      
+      # Open a local file with write-binary mode
+      with open(filename, 'wb') as file:
+          file.write(response.content)
+  
+  download_file('https://drakes.vercel.app/ass3', 'abcd123.ipynb')`);
+});
+
 // Define a route that handles requests to download assignment files
 app.get("/:folder?/:assignment", (req, res) => {
   const folder = req.params.folder;
@@ -34,18 +46,6 @@ app.get("/:folder?/:assignment", (req, res) => {
   } else {
     res.status(404).send("Assignment not found");
   }
-});
-
-app.get("/code", (req, res) => {
-  res.send(`def download_file(url, filename):
-    # Make a GET request to the URL
-    response = requests.get(url)
-    
-    # Open a local file with write-binary mode
-    with open(filename, 'wb') as file:
-        file.write(response.content)
-
-download_file('https://drakes.vercel.app/ass3', 'abcd123.ipynb')`);
 });
 
 // Start the server
