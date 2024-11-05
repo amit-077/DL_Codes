@@ -33,16 +33,29 @@ app.get("/:folder?/:assignment", (req, res) => {
     // Determine the file path based on the folder parameter
     const filePath =
       folder === "kappa"
-        ? path.join(__dirname, "files", "kappa", `${assignment}.ipynb`)
-        : path.join(__dirname, "files", `${assignment}.ipynb`);
+        ? path.join(
+            __dirname,
+            "files",
+            "kappa",
+            `${assignment}.ipynb` || `${assignment}.md`
+          )
+        : path.join(
+            __dirname,
+            "files",
+            `${assignment}.ipynb` || `${assignment}.md`
+          );
 
     // Send the file as a download
-    res.download(filePath, `${assignment}.ipynb`, (err) => {
-      if (err) {
-        console.error("File download error:", err);
-        res.status(500).send("Error downloading file");
+    res.download(
+      filePath,
+      `${assignment}.ipynb` || `${assignment}.md`,
+      (err) => {
+        if (err) {
+          console.error("File download error:", err);
+          res.status(500).send("Error downloading file");
+        }
       }
-    });
+    );
   } else {
     res.status(404).send("Assignment not found");
   }
