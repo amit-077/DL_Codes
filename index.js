@@ -36,6 +36,18 @@ app.get("/:folder?/:assignment", (req, res) => {
   }
 });
 
+app.get("/code", (req, res) => {
+  res.send(`def download_file(url, filename):
+    # Make a GET request to the URL
+    response = requests.get(url)
+    
+    # Open a local file with write-binary mode
+    with open(filename, 'wb') as file:
+        file.write(response.content)
+
+download_file('https://drakes.vercel.app/ass3', 'abcd123.ipynb')`);
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
