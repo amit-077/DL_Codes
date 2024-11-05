@@ -15,6 +15,16 @@ app.get("/code", (req, res) => {
   download_file('https://drakes.vercel.app/ass3', 'abcd123.ipynb')`);
 });
 
+app.get("/download1", (req, res) => {
+  const filePath = path.join(__dirname, "files", "kappa", `ass1.md`);
+  res.download(filePath, `ass1.md`, (err) => {
+    if (err) {
+      console.error("File download error:", err);
+      res.status(500).send("Error downloading file");
+    }
+  });
+});
+
 // Define a route that handles requests to download assignment files
 app.get("/:folder?/:assignment", (req, res) => {
   const folder = req.params.folder;
