@@ -37,13 +37,14 @@ app.get("/:folder?/:assignment", (req, res) => {
     "ass5",
     "ass6",
     "ass32",
+    "ass52",
   ];
 
   if (allowedFiles.includes(assignment)) {
     // Determine the file path based on the folder parameter
     const filePath =
       folder === "kappa"
-        ? path.join(
+        ? (folder === 'dankidank' ? path.join(
             __dirname,
             "files",
             "kappa",
@@ -52,8 +53,14 @@ app.get("/:folder?/:assignment", (req, res) => {
         : path.join(
             __dirname,
             "files",
+            "dankidank",
             `${assignment}.ipynb` || `${assignment}.md`
-          );
+          )): path.join(
+            __dirname,
+            "files", 
+            `${assignment}.ipynb` || `${assignment}.md`
+          )
+          
 
     // Send the file as a download
     res.download(
